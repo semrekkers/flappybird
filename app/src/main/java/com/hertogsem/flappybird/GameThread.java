@@ -43,4 +43,16 @@ public class GameThread extends Thread{
         }
     }
 
+    public synchronized void begin() {
+        running(true);
+        start();
+    }
+
+
+    public final void end() throws InterruptedException {
+        running(false);
+        join();
+    }
+
+
 }
