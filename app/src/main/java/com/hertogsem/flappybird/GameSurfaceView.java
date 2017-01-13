@@ -1,10 +1,13 @@
 package com.hertogsem.flappybird;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
 public class GameSurfaceView extends SurfaceView {
+
+    private GameThread thread;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -25,8 +28,8 @@ public class GameSurfaceView extends SurfaceView {
 
     }
 
-    protected void updateGame() {
-        
+    protected void updateGame(Canvas canvas) {
+
     }
 
 }
