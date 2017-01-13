@@ -1,6 +1,7 @@
 package com.hertogsem.flappybird;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 public interface GameObject {
     /**
@@ -14,6 +15,7 @@ public interface GameObject {
     /**
      * Draw draws the object to the canvas.
      * @param canvas The game canvas.
+     * @param paint The canvas paint.
      */
-    void draw(Canvas canvas);
+    void draw(Canvas canvas, Paint paint);
 }
