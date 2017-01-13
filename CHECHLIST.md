@@ -1,7 +1,7 @@
 Checklist
 =========
 
-  - [ ] Play game knop
+  - [ ] Play game button
   - [ ] Unique player name input
   - [ ] Incremental X-speed of bird (game complexity)
   - [ ] Attraction mode
