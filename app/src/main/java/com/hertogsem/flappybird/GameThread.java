@@ -10,24 +10,24 @@ import android.util.Log;
 public class GameThread extends Thread{
 
     private GameSurfaceView surfaceView;
-    private Boolean isRunning;
+    private Boolean running;
 
     public GameThread(GameSurfaceView view) {
         this.surfaceView = view;
-        this.isRunning = false;
+        this.running = false;
     }
 
     public void running(boolean running) {
-        this.isRunning = running;
+        this.running = running;
     }
 
     @Override
     public void run() {
-        while(isRunning) {
+        while(running) {
 
             // Update canvas
             Canvas canvas = surfaceView.getHolder().lockCanvas();
-            if( canvas != null ) {
+            if(canvas != null) {
                 synchronized (surfaceView.getHolder()) {
                     surfaceView.updateGame(canvas);
                 }
@@ -35,7 +35,9 @@ public class GameThread extends Thread{
             }
 
             // Sleep
-            try { sleep(1000/60); } catch (InterruptedException ex) {
+            try {
+                sleep(1000/60);
+            } catch (InterruptedException ex) {
                 Log.e("", ex.getLocalizedMessage());
             }
         }
