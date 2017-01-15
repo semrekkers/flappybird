@@ -1,8 +1,6 @@
 package com.hertogsem.flappybird;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -12,7 +10,7 @@ public class GameSurfaceView extends SurfaceView {
     private static final String TAG = "GameSurfaceView";
 
     private GameThread thread;
-    private SurfaceHolder holder;
+    private GameLoop loop;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -30,31 +28,35 @@ public class GameSurfaceView extends SurfaceView {
     }
 
     private void init() {
-        this.thread = new GameThread(this);
-        this.holder = getHolder();
-
-        this.paint = new Paint();
         try {
-            this.background = new Background(getContext());
+            this.loop = new GameLoop(this);
+            this.thread = new GameThread(loop);
         }
         catch (Exception ex) {
-            Log.e(TAG, "Exception on constructing Background: "+ex.getMessage());
+            Log.e(TAG, "Exception while initializing: "+ex.getMessage());
         }
+
+        getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                // Start GameThread
+                thread.startThread();
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+                try {
+                    thread.stopThread();
+                }
+                catch (InterruptedException ex) {
+                    Log.e(TAG, "stopThread failed: "+ex.getMessage());
+                }
+            }
+        });
     }
-
-    // NOT THREAD SAFE
-    private Background background;
-    private Paint paint;
-    // END OF NOT THREAD SAFE
-
-    protected void updateGame(Canvas canvas) {
-        long time = System.currentTimeMillis();
-        int width = canvas.getWidth();
-        int height = canvas.getHeight();
-
-        // Only for testing
-        background.update(time, width, height);
-        background.draw(canvas, paint);
-    }
-
 }

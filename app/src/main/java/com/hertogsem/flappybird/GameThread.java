@@ -1,6 +1,7 @@
 package com.hertogsem.flappybird;
 
 import android.graphics.Canvas;
+import android.provider.Settings;
 import android.util.Log;
 
 /**
@@ -8,51 +9,72 @@ import android.util.Log;
  */
 
 public class GameThread extends Thread{
+    public static final String TAG = "GameThread";
 
-    private GameSurfaceView surfaceView;
+    private GameLoop loop;
+
+    private Object lock = new Object();
+    private int fps;
     private Boolean running;
 
-    public GameThread(GameSurfaceView view) {
-        this.surfaceView = view;
+    public GameThread(GameLoop loop) {
+        this.loop = loop;
+        this.fps = 60;
         this.running = false;
-    }
-
-    public void running(boolean running) {
-        this.running = running;
     }
 
     @Override
     public void run() {
-        while(running) {
+        long time, duration, sleepTime;
 
-            // Update canvas
-            Canvas canvas = surfaceView.getHolder().lockCanvas();
-            if(canvas != null) {
-                synchronized (surfaceView.getHolder()) {
-                    surfaceView.updateGame(canvas);
+        while (isRunning()) {
+            time = System.currentTimeMillis();
+            loop.run();
+            duration = System.currentTimeMillis() - time;
+
+            sleepTime = (1000 / getFps()) - duration;
+            if (sleepTime > 0) {
+                try {
+                    sleep(sleepTime);
                 }
-                surfaceView.getHolder().unlockCanvasAndPost(canvas);
-            }
-
-            // Sleep
-            try {
-                sleep(1000/60);
-            } catch (InterruptedException ex) {
-                Log.e("", ex.getLocalizedMessage());
+                catch (InterruptedException ex) {
+                    Log.e(TAG, "Before or while sleep: " + ex.getMessage());
+                }
             }
         }
     }
 
-    public synchronized void begin() {
-        running(true);
+    public void startThread() {
+        setRunning(true);
         start();
     }
 
-
-    public final void end() throws InterruptedException {
-        running(false);
+    public void stopThread() throws InterruptedException {
+        setRunning(false);
         join();
     }
 
+    public int getFps() {
+        synchronized (lock) {
+            return fps;
+        }
+    }
 
+    public void setFps(int fps) {
+        synchronized (lock) {
+            this.fps = fps;
+        }
+    }
+
+    public boolean isRunning() {
+        synchronized (lock) {
+            return running;
+        }
+    }
+
+    private void setRunning(boolean running) {
+        synchronized (lock) {
+            this.running = running;
+        }
+    }
 }
