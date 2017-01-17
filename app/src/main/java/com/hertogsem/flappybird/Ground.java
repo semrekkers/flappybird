@@ -1,23 +1,23 @@
 package com.hertogsem.flappybird;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 /**
  * Created by Sem Rekkers on 15-1-2017.
  */
 
-public class Ground implements GameObject {
+public class Ground extends ResponsiveImage {
     public static final int HEIGHT = 128;
-    public static final int WIDTH = 37;
+    public static final int WIDTH = 768;
 
-    @Override
-    public void update(long time, int width, int height) {
-
+    public Ground(Context context) {
+        super(BitmapFactory.decodeResource(context.getResources(), R.drawable.ground_full));
     }
 
     @Override
-    public void draw(Canvas canvas, Paint paint) {
-
+    protected Rect updateDrawPoint(long time, int width, int height) {
+        return new Rect(0, height - Ground.HEIGHT, width, height);
     }
 }

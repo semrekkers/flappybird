@@ -1,7 +1,5 @@
 package com.hertogsem.flappybird;
 
-import android.graphics.Canvas;
-import android.provider.Settings;
 import android.util.Log;
 
 /**
