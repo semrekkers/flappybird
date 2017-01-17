@@ -1,15 +1,17 @@
 package com.hertogsem.flappybird;
 
-import android.graphics.Canvas;
-import android.provider.Settings;
-import android.util.Log;
+        import android.graphics.Canvas;
+        import android.provider.Settings;
+        import android.util.Log;
 
 /**
  * Created by janlindenberg on 13/01/2017.
  */
 
-public class GameThread extends Thread{
+public class GameThread extends Thread {
     public static final String TAG = "GameThread";
+
+    public static final int LOG_SKIPPED_FRAMES = 3;
 
     private GameLoop loop;
 
@@ -26,19 +28,39 @@ public class GameThread extends Thread{
     @Override
     public void run() {
         long time, duration, sleepTime;
+        boolean skipFrame = false;
+        int skipCount = 0;
 
         while (isRunning()) {
-            time = System.currentTimeMillis();
-            loop.run();
-            duration = System.currentTimeMillis() - time;
+            // Check for frame skipping
+            if (!skipFrame) {
+                // Run the GameLoop once
+                time = System.currentTimeMillis();
+                loop.run();
+                duration = System.currentTimeMillis() - time;
 
-            sleepTime = (1000 / getFps()) - duration;
-            if (sleepTime > 0) {
-                try {
-                    sleep(sleepTime);
+                // Calculate sleep time
+                sleepTime = (1000 / getFps()) - duration;
+                if (sleepTime > 0) {
+                    try {
+                        // Try to sleep if there is sleeptime
+                        sleep(sleepTime);
+                    }
+                    catch (InterruptedException ex) {
+                        Log.e(TAG, "Before or while sleep: " + ex.getMessage());
+                    }
                 }
-                catch (InterruptedException ex) {
-                    Log.e(TAG, "Before or while sleep: " + ex.getMessage());
+                else {
+                    // There is no sleeptime, skip the next frame.
+                    skipFrame = true;
+                }
+            }
+            else {
+                skipFrame = false;
+                skipCount++;
+                if (skipCount > LOG_SKIPPED_FRAMES) {
+                    skipCount = 0;
+                    Log.i(TAG, "Skipped " + LOG_SKIPPED_FRAMES + " frames!");
                 }
             }
         }
