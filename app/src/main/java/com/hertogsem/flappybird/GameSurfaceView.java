@@ -39,8 +39,10 @@ public class GameSurfaceView extends SurfaceView {
         getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                // Start GameThread
-                thread.startThread();
+                // Start GameThread if not running
+                if (!thread.isRunning()) {
+                    thread.startThread();
+                }
             }
 
             @Override
@@ -51,7 +53,10 @@ public class GameSurfaceView extends SurfaceView {
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
                 try {
-                    thread.stopThread();
+                    // Stop thread if running
+                    if (thread.isRunning()) {
+                        thread.stopThread();
+                    }
                 }
                 catch (InterruptedException ex) {
                     Log.e(TAG, "stopThread failed: "+ex.getMessage());
