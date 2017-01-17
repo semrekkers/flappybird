@@ -17,6 +17,8 @@ public class GameLoop {
     private Paint paint;
     private Background background;
 
+    private static Canvas canvas;
+
     public GameLoop(GameSurfaceView gameSurfaceView) throws Exception {
         this.gameSurfaceView = gameSurfaceView;
 
@@ -26,10 +28,13 @@ public class GameLoop {
 
     public void run() {
         synchronized (loopLock) {
-            Canvas canvas = gameSurfaceView.getHolder().lockCanvas();
+            canvas = null;
+            canvas = gameSurfaceView.getHolder().lockCanvas();
             if (canvas != null) {
                 synchronized (gameSurfaceView.getHolder()) {
-                    loopOnce(canvas);
+                    //loopOnce(canvas);
+                    gameSurfaceView.update();
+                    gameSurfaceView.draw(canvas);
                 }
                 gameSurfaceView.getHolder().unlockCanvasAndPost(canvas);
             }

@@ -1,6 +1,11 @@
 package com.hertogsem.flappybird;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -11,6 +16,9 @@ public class GameSurfaceView extends SurfaceView {
 
     private GameThread thread;
     private GameLoop loop;
+
+    private Player player;
+    private Point playerPoint;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -28,6 +36,10 @@ public class GameSurfaceView extends SurfaceView {
     }
 
     private void init() {
+
+        player = new Player(new Rect(100,100, 200,200), Color.RED);
+        playerPoint = new Point(200,200);
+
         try {
             this.loop = new GameLoop(this);
             this.thread = new GameThread(loop);
@@ -58,5 +70,24 @@ public class GameSurfaceView extends SurfaceView {
                 }
             }
         });
+    }
+    public void update() {
+        player.update(playerPoint);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+        Paint paint = new Paint();
+        try {
+            Background background = new Background(this.getContext());
+            background.draw(canvas, paint);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        player.draw(canvas, paint);
+
+
     }
 }
