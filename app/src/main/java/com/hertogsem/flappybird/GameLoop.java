@@ -30,8 +30,8 @@ public class GameLoop {
 
         this.background = new Background(gameSurfaceView.getContext());
         this.ground = new Ground(gameSurfaceView.getContext());
-        this.player = new Player(new Rect(100,100, 200,200), Color.RED);
-        this.playerPoint = new Point(200,200);
+        //this.player = new Player(new Rect(100,100, 200,200), Color.RED);
+        //this.playerPoint = new Point(200,200);
     }
 
     public void run() {
@@ -54,12 +54,12 @@ public class GameLoop {
         background.update(time, width, height);
         // pipe.update()
         ground.update(time, width, height);
-        player.update(time, width, height);
+        //player.update(time, width, height);
 
         background.draw(canvas, paint);
         // pipe.draw()
         ground.draw(canvas, paint);
-        player.draw(canvas, paint);
+        //player.draw(canvas, paint);
     }
 
 }
