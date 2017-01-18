@@ -9,6 +9,9 @@ import android.graphics.Rect;
  * Created by janlindenberg on 17/01/2017.
  */
 
+/**
+ * the rectangle resembling the player
+ */
 public class Player implements GameObject {
 
     private Rect rectangle;
@@ -24,6 +27,11 @@ public class Player implements GameObject {
 
     }
 
+    /**
+     * Updates the point the player will be drawn at.
+     * @param point
+     * Point is the middle of the player.
+     */
     public void update(Point point) {
         rectangle.set(point.x - rectangle.width()/2, point.y - rectangle.height() / 2, point.x + rectangle.width()/2, point.y + rectangle.height() / 2);
     }
