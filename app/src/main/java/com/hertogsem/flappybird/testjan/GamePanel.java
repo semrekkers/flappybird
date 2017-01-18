@@ -1,6 +1,7 @@
 package com.hertogsem.flappybird.testjan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,6 +14,8 @@ import android.view.SurfaceView;
 import com.hertogsem.flappybird.Constants;
 import com.hertogsem.flappybird.PipeManager;
 import com.hertogsem.flappybird.Player;
+import com.hertogsem.flappybird.PlayerNameActivity;
+import com.hertogsem.flappybird.ScoreboardActivity;
 
 /**
  * Created by janlindenberg on 17/01/2017.
@@ -96,6 +99,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                     movingPlayer = true;
                 }
                 if(gameOver && System.currentTimeMillis() - gameOverTime > 2000) {
+                    showScoreboard();
                     reset();
                     gameOver = false;
                 }
@@ -120,9 +124,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             pipeManager.update();
 
             if(pipeManager.playerColide(player)) {
-//                playerStart = false;
-//                gameOver = true;
-//                gameOverTime = System.currentTimeMillis();
+                playerStart = false;
+                gameOver = true;
+                gameOverTime = System.currentTimeMillis();
             }
         }
     }
@@ -135,7 +139,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         pipeManager.draw(canvas, paint);
         player.draw(canvas, paint);
-
 
         if(!playerStart && !gameOver) {
             paint.setTextSize(100);
@@ -161,5 +164,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         float x = cWidth / 2f - r.width() / 2f - r.left;
         float y = cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
+    }
+
+    private void showScoreboard() {
+        Intent intent = new Intent(this.getContext(), PlayerNameActivity.class);
+        intent.putExtra(ScoreboardActivity.EXTRA_SCORE, pipeManager.getScore());
+        this.getContext().startActivity(intent);
     }
 }
