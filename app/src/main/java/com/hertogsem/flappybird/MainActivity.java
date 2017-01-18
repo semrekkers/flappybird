@@ -6,8 +6,6 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.hertogsem.flappybird.testjan.GamePanel;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

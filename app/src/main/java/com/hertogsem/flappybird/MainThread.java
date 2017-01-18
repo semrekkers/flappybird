@@ -1,7 +1,9 @@
-package com.hertogsem.flappybird.testjan;
+package com.hertogsem.flappybird;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
+
+import com.hertogsem.flappybird.GamePanel;
 
 /**
  * Created by janlindenberg on 17/01/2017.

@@ -1,4 +1,4 @@
-package com.hertogsem.flappybird.testjan;
+package com.hertogsem.flappybird;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,12 +10,6 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
-import com.hertogsem.flappybird.Constants;
-import com.hertogsem.flappybird.PipeManager;
-import com.hertogsem.flappybird.Player;
-import com.hertogsem.flappybird.PlayerNameActivity;
-import com.hertogsem.flappybird.ScoreboardActivity;
 
 /**
  * Created by janlindenberg on 17/01/2017.
