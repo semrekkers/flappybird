@@ -120,9 +120,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             pipeManager.update();
 
             if(pipeManager.playerColide(player)) {
-                playerStart = false;
-                gameOver = true;
-                gameOverTime = System.currentTimeMillis();
+//                playerStart = false;
+//                gameOver = true;
+//                gameOverTime = System.currentTimeMillis();
             }
         }
     }
@@ -131,10 +131,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        canvas.drawColor(Color.WHITE);
+        //canvas.drawColor(Color.WHITE);
 
-        player.draw(canvas, paint);
         pipeManager.draw(canvas, paint);
+        player.draw(canvas, paint);
+
 
         if(!playerStart && !gameOver) {
             paint.setTextSize(100);

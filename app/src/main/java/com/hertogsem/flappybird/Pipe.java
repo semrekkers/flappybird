@@ -1,8 +1,5 @@
 package com.hertogsem.flappybird;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,22 +11,18 @@ import android.graphics.Rect;
 
 public class Pipe implements GameObject {
 
-    private Context context;
-    private Bitmap pipeImage;
     private Rect pipeRect;
     private Rect pipeRect2;
+    private int color;
 
     private  int startX, startY, playerGap;
 
-    public Pipe(Context context, int startX, int startY, int playerGap) {
+    public Pipe(int startX, int startY, int playerGap, int color) {
 
         this.startX = startX;
         this.startY = startY;
         this.playerGap = playerGap;
-
-//        this.pipeImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.pipe);
-//        this.pipeRect = new Rect(0 + startX, startY + playerGap, pipeImage.getWidth() + startX, pipeImage.getHeight() + startY);
-//        this.pipeRect2 = new Rect(0 + startX, startY - pipeImage.getHeight(), pipeImage.getWidth() + startX, startY);
+        this.color = color;
 
         this.pipeRect = new Rect(0 + startX, startY + playerGap, Constants.PIPE_WIDTH + startX, Constants.SCREEN_HEIGHT);
         this.pipeRect2 = new Rect(0 + startX, 0, Constants.PIPE_WIDTH + startX, startY);
@@ -41,19 +34,12 @@ public class Pipe implements GameObject {
 
     }
 
-    public void update() {
-
-    }
-
     @Override
     public void draw(Canvas canvas, Paint paint) {
 
-//        canvas.drawBitmap(pipeImage, null, pipeRect, paint);
-//        canvas.drawBitmap(Helper.rotateBitmap180(pipeImage), null, pipeRect2, paint);
-
-        paint.setColor(Color.BLACK);
+        paint.setColor(color);
         canvas.drawRect(pipeRect, paint);
-        paint.setColor(Color.GRAY);
+        paint.setColor(color);
         canvas.drawRect(pipeRect2, paint);
 
     }
@@ -78,5 +64,9 @@ public class Pipe implements GameObject {
 
     public Rect getRectangle() {
         return pipeRect;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
