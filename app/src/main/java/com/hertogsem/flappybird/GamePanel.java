@@ -43,16 +43,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         playerPoint = new Point(Constants.SCREEN_WIDTH/2 , 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
-        pipeManager = new PipeManager(context, 400, 500);
+        pipeManager = new PipeManager(400, 500);
 
         setFocusable(true);
     }
 
+    /**
+     * Resets game to startingpoint
+     */
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH/2 , 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
-        pipeManager = new PipeManager(getContext(), 400, 500);
+        pipeManager = new PipeManager(400, 500);
         movingPlayer = false;
         playerStart = false;
     }
@@ -112,6 +115,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         //return super.onTouchEvent(event);
     }
 
+    /**
+     * Updates the game
+     */
     public void update() {
         if(!gameOver  && playerStart) {
             player.update(playerPoint);
@@ -125,6 +131,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
 
+    /**
+     * draws all elements on screen
+     * @param canvas
+     */
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -149,6 +159,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
 
+    /**
+     * Draws text in middle of the screen
+     * @param canvas
+     * @param paint
+     * @param text
+     * text to be drawn
+     */
     private void drawCenterText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
@@ -160,6 +177,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         canvas.drawText(text, x, y, paint);
     }
 
+    /**
+     * shows scoreboard
+     */
     private void showScoreboard() {
         Intent intent = new Intent(this.getContext(), PlayerNameActivity.class);
         intent.putExtra(ScoreboardActivity.EXTRA_SCORE, pipeManager.getScore());
