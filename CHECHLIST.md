@@ -1,15 +1,15 @@
 Checklist
 =========
 
-  - [ ] Play game button
-  - [ ] Unique player name input
-  - [ ] Incremental X-speed of bird (game complexity)
+  - [x] Play game button
+  - [x] Unique player name input
+  - [x] Incremental X-speed of bird (game complexity)
   - [ ] Attraction mode
-  - [ ] Game start countdown
-  - [ ] Player score (fly through gap between pipes)
-  - [ ] Die mode (player score result)
-  - [ ] Scoreboard (multiplayer)
-  - [ ] About activity
+  - [x] Game start countdown
+  - [x] Player score (fly through gap between pipes)
+  - [x] Die mode (player score result)
+  - [x] Scoreboard (multiplayer)
+  - [x] About activity
   - [ ] Diagram of domain model
-  - [ ] Nice sourcecode with comments (doc-comments)
-  - [ ] Use Logging
+  - [x] Nice sourcecode with comments (doc-comments)
+  - [x] Use Logging
