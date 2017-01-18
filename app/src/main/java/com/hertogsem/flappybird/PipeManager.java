@@ -104,4 +104,8 @@ public class PipeManager {
         }
         return false;
     }
+
+    public int getScore() {
+        return score;
+    }
 }
