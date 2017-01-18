@@ -22,6 +22,7 @@ public class PipeManager {
     private long initTime;
 
     private int score= 0;
+    float speedMultiplier;
 
     public PipeManager(Context context, int playerGap, int pipeGap) {
         this.context = context;
@@ -45,6 +46,7 @@ public class PipeManager {
         paint.setColor(Color.BLUE);
         paint.setTextSize(100);
         canvas.drawText("" + score, 50, 50 + paint.descent() - paint.ascent() , paint);
+        canvas.drawText("" + speedMultiplier, 300, 50 + paint.descent() - paint.ascent() , paint);
 
     }
 
@@ -59,7 +61,11 @@ public class PipeManager {
     }
 
     public void update() {
-        float speed = Constants.SCREEN_WIDTH / 100.0f;
+        int elapsedTime = (int) (System.currentTimeMillis() - startTime);
+        startTime = System.currentTimeMillis();
+        float speed =  Constants.SCREEN_WIDTH / (300.0f);
+        speedMultiplier = (float) (Math.sqrt(1 + (startTime - initTime) / 6000.0));
+        speed *= speedMultiplier;
         for (Pipe pipe : pipes) {
             pipe.decrementX(speed);
         }
