@@ -29,7 +29,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Rect r = new Rect();
 
     private boolean movingPlayer = false;
-
+    private boolean playerStart = false;
     private boolean gameOver = false;
     private long gameOverTime;
 
@@ -55,7 +55,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         playerPoint = new Point(Constants.SCREEN_WIDTH/2 , 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
-        pipeManager = new PipeManager(getContext(), 400, 500);        movingPlayer = false;
+        pipeManager = new PipeManager(getContext(), 400, 500);
+        movingPlayer = false;
+        playerStart = false;
     }
 
     @Override
@@ -90,6 +92,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if(!gameOver && player.getRectangle().contains((int) event.getX(), (int) event.getY())) {
+                    playerStart = true;
                     movingPlayer = true;
                 }
                 if(gameOver && System.currentTimeMillis() - gameOverTime > 2000) {
@@ -112,11 +115,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void update() {
-        if(!gameOver) {
+        if(!gameOver  && playerStart) {
             player.update(playerPoint);
             pipeManager.update();
 
             if(pipeManager.playerColide(player)) {
+                playerStart = false;
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
             }
@@ -131,6 +135,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         player.draw(canvas, paint);
         pipeManager.draw(canvas, paint);
+
+        if(!playerStart && !gameOver) {
+            paint.setTextSize(100);
+            paint.setFakeBoldText(true);
+            paint.setColor(Color.RED);
+            drawCenterText(canvas, paint, "press to move");
+        }
 
         if(gameOver) {
             paint.setTextSize(100);

@@ -2,6 +2,7 @@ package com.hertogsem.flappybird;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class PipeManager {
 
     private long startTime;
     private long initTime;
+
+    private int score= 0;
 
     public PipeManager(Context context, int playerGap, int pipeGap) {
         this.context = context;
@@ -38,6 +41,10 @@ public class PipeManager {
         for (Pipe pipe: pipes) {
             pipe.draw(canvas, paint);
         }
+
+        paint.setColor(Color.BLUE);
+        paint.setTextSize(100);
+        canvas.drawText("" + score, 50, 50 + paint.descent() - paint.ascent() , paint);
 
     }
 
@@ -60,6 +67,7 @@ public class PipeManager {
             int yStart = (int) (Math.random() * (Constants.SCREEN_HEIGHT - playerGap));
             pipes.add(new Pipe(context, pipes.get(pipes.size() - 1).getRectangle().right + pipeGap, yStart, playerGap));
             System.out.println(pipes.remove(0));
+            score++;
         }
     }
 
