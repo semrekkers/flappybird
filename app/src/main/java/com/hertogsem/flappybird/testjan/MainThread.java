@@ -15,6 +15,7 @@ public class MainThread extends Thread {
     private GamePanel gamePanel;
     private boolean running;
     private static Canvas canvas;
+    private Object lock = new Object();
 
     public MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
 
@@ -25,9 +26,15 @@ public class MainThread extends Thread {
     }
 
     public void setRunning(boolean running) {
+        synchronized (lock) {
+            this.running = true;
+        }
+    }
 
-        this.running = true;
-
+    public boolean isRunning() {
+        synchronized (lock) {
+            return this.running;
+        }
     }
 
     @Override
@@ -40,7 +47,7 @@ public class MainThread extends Thread {
         long totalTime = 0;
         long targetTime = 1000/MAX_FPS;
 
-        while(running) {
+        while(isRunning()) {
             startTime = System.nanoTime();
             canvas = null;
 
@@ -49,7 +56,6 @@ public class MainThread extends Thread {
                 synchronized (surfaceHolder) {
                     this.gamePanel.update();
                     this.gamePanel.draw(canvas);
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
