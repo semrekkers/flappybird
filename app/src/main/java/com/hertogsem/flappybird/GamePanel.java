@@ -22,13 +22,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Player player;
     private Point playerPoint;
     private PipeManager pipeManager;
+    private PlayerAnimator playerAnimator;
 
     private Rect r = new Rect();
 
+    private boolean attractionMode = true;
     private boolean movingPlayer = false;
     private boolean playerStart = false;
     private boolean gameOver = false;
-    private long gameOverTime;
+    private long gameOverTime, currentTime;
 
     Paint paint = new Paint();
 
@@ -44,6 +46,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         player.update(playerPoint);
 
         pipeManager = new PipeManager(400, 500);
+        playerAnimator = new PlayerAnimator(playerPoint.y);
 
         setFocusable(true);
     }
@@ -58,6 +61,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         pipeManager = new PipeManager(400, 500);
         movingPlayer = false;
         playerStart = false;
+        attractionMode = true;
     }
 
     @Override
@@ -93,6 +97,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             case MotionEvent.ACTION_DOWN:
                 if(!gameOver && player.getRectangle().contains((int) event.getX(), (int) event.getY())) {
                     playerStart = true;
+                    attractionMode = false;
                     movingPlayer = true;
                 }
                 if(gameOver && System.currentTimeMillis() - gameOverTime > 2000) {
@@ -112,14 +117,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         }
 
         return true;
-        //return super.onTouchEvent(event);
     }
 
     /**
      * Updates the game
      */
     public void update() {
-        if(!gameOver  && playerStart) {
+        currentTime = System.currentTimeMillis();
+
+        if (attractionMode) {
+            //int y = playerAnimator.getNextYPosition(currentTime);
+            //playerPoint.set(playerPoint.x, y);
+            //player.update(playerPoint);
+        }
+
+        if(!gameOver && playerStart) {
             player.update(playerPoint);
             pipeManager.update();
 
