@@ -33,4 +33,8 @@ public class Player implements GameObject {
         paint.setColor(color);
         canvas.drawRect(rectangle, paint);
     }
+
+    public Rect getRectangle() {
+        return rectangle;
+    }
 }

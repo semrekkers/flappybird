@@ -27,12 +27,12 @@ public class Pipe implements GameObject {
         this.startY = startY;
         this.playerGap = playerGap;
 
-        //this.pipeImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.pipe);
-        //this.pipeRect = new Rect(0 + startX, startY + playerGap, pipeImage.getWidth() + startX, pipeImage.getHeight() + startY);
-        ///this.pipeRect2 = new Rect(0 + startX, startY - pipeImage.getHeight(), pipeImage.getWidth() + startX, startY);
+//        this.pipeImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.pipe);
+//        this.pipeRect = new Rect(0 + startX, startY + playerGap, pipeImage.getWidth() + startX, pipeImage.getHeight() + startY);
+//        this.pipeRect2 = new Rect(0 + startX, startY - pipeImage.getHeight(), pipeImage.getWidth() + startX, startY);
 
-        this.pipeRect = new Rect(0 + startX, startY + playerGap, Constants.PIPE_WIDTH + startX, Constants.PIPE_HEIGHT + startY);
-        this.pipeRect2 = new Rect(0 + startX, startY - Constants.PIPE_HEIGHT, Constants.PIPE_WIDTH + startX, startY);
+        this.pipeRect = new Rect(0 + startX, startY + playerGap, Constants.PIPE_WIDTH + startX, Constants.SCREEN_HEIGHT);
+        this.pipeRect2 = new Rect(0 + startX, 0, Constants.PIPE_WIDTH + startX, startY);
 
     }
 
@@ -48,11 +48,12 @@ public class Pipe implements GameObject {
     @Override
     public void draw(Canvas canvas, Paint paint) {
 
-        //canvas.drawBitmap(pipeImage, null, pipeRect, paint);
-        //canvas.drawBitmap(Helper.rotateBitmap180(pipeImage), null, pipeRect2, paint);
+//        canvas.drawBitmap(pipeImage, null, pipeRect, paint);
+//        canvas.drawBitmap(Helper.rotateBitmap180(pipeImage), null, pipeRect2, paint);
 
         paint.setColor(Color.BLACK);
         canvas.drawRect(pipeRect, paint);
+        paint.setColor(Color.GRAY);
         canvas.drawRect(pipeRect2, paint);
 
     }
@@ -69,6 +70,10 @@ public class Pipe implements GameObject {
         pipeRect.right -= x;
         pipeRect2.left -= x;
         pipeRect2.right -= x;
+    }
+
+    public boolean playerCollide(Player player) {
+        return Rect.intersects(pipeRect, player.getRectangle()) || Rect.intersects(pipeRect2, player.getRectangle());
     }
 
     public Rect getRectangle() {

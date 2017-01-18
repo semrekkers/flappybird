@@ -6,6 +6,8 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.hertogsem.flappybird.testjan.GamePanel;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,6 +21,6 @@ public class MainActivity extends AppCompatActivity {
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
 
-        setContentView(new GameSurfaceView(this));
+        setContentView(new GamePanel(this));
     }
 }

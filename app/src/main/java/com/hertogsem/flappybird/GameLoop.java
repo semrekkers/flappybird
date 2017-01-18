@@ -22,6 +22,8 @@ public class GameLoop {
     private Ground ground;
     private Player player;
     private Point playerPoint;
+    private Pipe pipe;
+    private PipeManager pipeManager;
 
     public GameLoop(GameSurfaceView gameSurfaceView) throws Exception {
         this.gameSurfaceView = gameSurfaceView;
@@ -30,8 +32,11 @@ public class GameLoop {
 
         this.background = new Background(gameSurfaceView.getContext());
         this.ground = new Ground(gameSurfaceView.getContext());
-        //this.player = new Player(new Rect(100,100, 200,200), Color.RED);
-        //this.playerPoint = new Point(200,200);
+        this.player = new Player(new Rect(100,100, 200,200), Color.RED);
+        this.playerPoint = new Point(200,200);
+
+        this.pipe = new Pipe(gameSurfaceView.getContext(), 400, 400, 400);
+        pipeManager = new PipeManager(gameSurfaceView.getContext(), 400, 2*Constants.SCREEN_WIDTH/3);
     }
 
     public void run() {
@@ -52,14 +57,16 @@ public class GameLoop {
         int height = canvas.getHeight();
 
         background.update(time, width, height);
-        // pipe.update()
+        pipeManager.update();
+        //pipe.update();
         ground.update(time, width, height);
-        //player.update(time, width, height);
+        player.update(time, width, height);
 
         background.draw(canvas, paint);
-        // pipe.draw()
+        pipeManager.draw(canvas, paint);
+        //pipe.draw(canvas, paint);
         ground.draw(canvas, paint);
-        //player.draw(canvas, paint);
+        player.draw(canvas, paint);
     }
 
 }
