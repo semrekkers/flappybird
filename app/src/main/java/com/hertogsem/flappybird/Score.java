@@ -31,12 +31,20 @@ public class Score {
         this.score = 0;
     }
 
+    /**
+     * Constructor for ScoreAdapter
+     * @param c The cursor.
+     */
     public Score(Cursor c) {
         this.id = c.getInt(c.getColumnIndex(COLUMN_ID));
         this.name = c.getString(c.getColumnIndex(COLUMN_NAME));
         this.score = c.getInt(c.getColumnIndex(COLUMN_SCORE));
     }
 
+    /**
+     * Save the current Score to database db.
+     * @param db The writable database reference.
+     */
     public void saveToDb(SQLiteDatabase db) throws Exception {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, this.name);

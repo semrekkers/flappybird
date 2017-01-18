@@ -21,6 +21,7 @@ public class PlayerNameActivity extends AppCompatActivity {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Go to the next activity, ScoreboardActivity
                 Intent nextIntent = new Intent(getBaseContext(), ScoreboardActivity.class);
                 nextIntent.putExtra(ScoreboardActivity.EXTRA_NAME, nameField.getText().toString());
                 nextIntent.putExtra(ScoreboardActivity.EXTRA_SCORE, intent.getIntExtra(ScoreboardActivity.EXTRA_SCORE, -1));

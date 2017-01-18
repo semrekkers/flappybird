@@ -37,6 +37,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 
         scoreListView = (ListView) findViewById(R.id.scoreListView);
 
+        // Add handler for the Fab.
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +51,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        // Update the view
         addPlayerScore();
         inflateList();
         super.onResume();
@@ -59,6 +61,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.hasExtra(EXTRA_SCORE) && !intent.hasExtra(EXTRA_ADDED)) {
+            // Add the player's score to the score table if it isn't already there.
             Score score = new Score();
             score.name = intent.getStringExtra(EXTRA_NAME);
             score.score = intent.getIntExtra(EXTRA_SCORE, 0);
@@ -74,11 +77,13 @@ public class ScoreboardActivity extends AppCompatActivity {
                 db.close();
             }
 
+            // Mark the score as added.
             intent.putExtra(EXTRA_ADDED, true);
         }
     }
 
     private void inflateList() {
+        // Inflate the ListView using the database and CursorAdapter.
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = ScoreDb.selectScores(db);
         ScoreAdapter adapter = new ScoreAdapter(this, c, 0);
@@ -87,6 +92,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Add the custom menu.
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_scoreboard, menu);
         return true;
@@ -94,8 +100,10 @@ public class ScoreboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.aboutMenuItem:
+                // Handle click events for the About menu item.
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 return true;

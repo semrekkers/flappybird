@@ -25,9 +25,11 @@ public class ScoreAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        // Get TextViews
         TextView playerName = (TextView) view.findViewById(android.R.id.text1);
         TextView scoreField = (TextView) view.findViewById(android.R.id.text2);
 
+        // Fill TextViews
         Score score = new Score(cursor);
         playerName.setText(score.name);
         scoreField.setText("Score: " + score.score);

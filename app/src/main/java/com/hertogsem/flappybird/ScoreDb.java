@@ -20,6 +20,7 @@ public class ScoreDb extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // Setup the database.
         db.execSQL(SQL_SETUP);
     }
 
@@ -30,10 +31,12 @@ public class ScoreDb extends SQLiteOpenHelper {
     }
 
     public static Cursor selectScores(SQLiteDatabase db) {
+        // Equivalent of SELECT * FROM `score` ORDER BY score DESC
         return db.query(Score.TABLE_NAME, Score.COLUMNS, null, null, null, null, Score.COLUMN_SCORE+" DESC", null);
     }
 
     public void deleteEntries() {
+        // Truncate the score table.
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(SQL_DELETE_ENTRIES);
         db.close();
