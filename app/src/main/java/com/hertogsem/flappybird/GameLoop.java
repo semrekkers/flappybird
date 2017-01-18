@@ -35,7 +35,6 @@ public class GameLoop {
         this.player = new Player(new Rect(100,100, 200,200), Color.RED);
         this.playerPoint = new Point(200,200);
 
-        this.pipe = new Pipe(gameSurfaceView.getContext(), 400, 400, 400);
         pipeManager = new PipeManager(gameSurfaceView.getContext(), 400, 2*Constants.SCREEN_WIDTH/3);
     }
 
@@ -58,13 +57,11 @@ public class GameLoop {
 
         background.update(time, width, height);
         pipeManager.update();
-        //pipe.update();
         ground.update(time, width, height);
         player.update(time, width, height);
 
         background.draw(canvas, paint);
         pipeManager.draw(canvas, paint);
-        //pipe.draw(canvas, paint);
         ground.draw(canvas, paint);
         player.draw(canvas, paint);
     }
