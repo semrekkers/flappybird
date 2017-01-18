@@ -43,7 +43,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         thread = new MainThread(getHolder(), this);
 
         player = new Player(new Rect(100,100,200,200), Color.rgb(255, 0, 0));
-        playerPoint = new Point(Constants.SCREEN_WIDTH/2 , 3*Constants.SCREEN_HEIGHT/4);
+        playerPoint = new Point(Constants.SCREEN_WIDTH/3 , Constants.SCREEN_HEIGHT/2);
         player.update(playerPoint);
 
         pipeManager = new PipeManager(context, 400, 500);
@@ -120,9 +120,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             pipeManager.update();
 
             if(pipeManager.playerColide(player)) {
-//                playerStart = false;
-//                gameOver = true;
-//                gameOverTime = System.currentTimeMillis();
+                playerStart = false;
+                gameOver = true;
+                gameOverTime = System.currentTimeMillis();
             }
         }
     }
